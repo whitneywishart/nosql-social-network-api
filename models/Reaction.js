@@ -1,18 +1,22 @@
 const { Schema, Types } = require('mongoose');
 
-const thoughtSchema = new Schema(
+const reactionSchema = new Schema(
   {
-    thoughtId: {
+    reactionId: {
       type: Schema.Types.ObjectId,
       default: () => new Types.ObjectId(),
     },
-    thoughtText: {
+    reactionText: {
       type: String,
       required: true,
       maxlength: 50,
-      minlength: 2,
+      minlength: 4,
     },
-
+    reactionCount: {
+      type: Number,
+      required: true,
+      
+    },
     createdAt: {
       type: Date,
       default: Date.now,
@@ -26,4 +30,4 @@ const thoughtSchema = new Schema(
   }
 );
 
-module.exports = thoughtSchema;
+module.exports = reactionSchema;

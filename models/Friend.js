@@ -1,16 +1,14 @@
 const { Schema, Types } = require('mongoose');
 
-const thoughtSchema = new Schema(
+const friendSchema = new Schema(
   {
-    thoughtId: {
+    friendId: {
       type: Schema.Types.ObjectId,
       default: () => new Types.ObjectId(),
     },
-    thoughtText: {
+    friendName: {
       type: String,
       required: true,
-      maxlength: 50,
-      minlength: 2,
     },
 
     createdAt: {
@@ -26,4 +24,4 @@ const thoughtSchema = new Schema(
   }
 );
 
-module.exports = thoughtSchema;
+module.exports = friendSchema;
