@@ -1,1 +1,1 @@
-# nosql-social-network-api
+# NoNQL Social Network API
