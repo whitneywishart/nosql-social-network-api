@@ -1,9 +1,9 @@
 const { Schema, model } = require('mongoose');
 
-// Schema to create a friend model
-const friendSchema = new Schema(
+// Schema to create a course model
+const courseSchema = new Schema(
   {
-    friendName: {
+    courseName: {
       type: String,
       required: true,
     },
@@ -14,6 +14,11 @@ const friendSchema = new Schema(
     startDate: {
       type: Date,
       default: Date.now(),
+    },
+    endDate: {
+      type: Date,
+      // Sets a default value of 12 weeks from now
+      default: () => new Date(+new Date() + 84 * 24 * 60 * 60 * 1000),
     },
     users: [
       {
@@ -30,6 +35,6 @@ const friendSchema = new Schema(
   }
 );
 
-const Friend = model('friend', friendSchema);
+const Course = model('course', courseSchema);
 
-module.exports = Friend;
+module.exports = Course;

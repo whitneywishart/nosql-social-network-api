@@ -6,18 +6,14 @@ const thoughtSchema = new Schema(
       type: Schema.Types.ObjectId,
       default: () => new Types.ObjectId(),
     },
-    thoughtName: {
+    thoughtText: {
       type: String,
       required: true,
       maxlength: 50,
-      minlength: 4,
+      minlength: 2,
       default: 'Unnamed thought',
     },
-    reaction: {
-      type: String,
-      required: true,
-      // default: () => Math.floor(Math.random() * (100 - 70 + 1) + 70),
-    },
+
     createdAt: {
       type: Date,
       default: Date.now,

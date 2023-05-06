@@ -14,7 +14,13 @@ const userSchema = new Schema(
       required: true,
       max_length: 50,
     },
+    github: {
+      type: String,
+      required: true,
+      max_length: 50,
+    },
     thoughts: [thoughtSchema],
+    friends: [friendSchema],
   },
   {
     toJSON: {

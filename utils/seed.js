@@ -1,5 +1,5 @@
 const connection = require('../config/connection');
-const { Friend, User } = require('../models');
+const { Course, User } = require('../models');
 const { getRandomName, getRandomThoughts } = require('./data');
 
 connection.on('error', (err) => err);
@@ -7,8 +7,8 @@ connection.on('error', (err) => err);
 connection.once('open', async () => {
   console.log('connected');
 
-  // Drop existing friends
-  await Friend.deleteMany({});
+  // Drop existing courses
+  await Course.deleteMany({});
 
   // Drop existing users
   await User.deleteMany({});
@@ -24,10 +24,12 @@ connection.once('open', async () => {
     const fullName = getRandomName();
     const first = fullName.split(' ')[0];
     const last = fullName.split(' ')[1];
+    const github = `${first}${Math.floor(Math.random() * (99 - 18 + 1) + 18)}`;
 
     users.push({
       first,
       last,
+      github,
       thoughts,
     });
   }
@@ -35,15 +37,15 @@ connection.once('open', async () => {
   // Add users to the collection and await the results
   await User.collection.insertMany(users);
 
-  // Add friends to the collection and await the results
-  await Friend.collection.insertOne({
-    friendName: 'UCLA',
+  // Add courses to the collection and await the results
+  await Course.collection.insertOne({
+    courseName: 'UCLA',
     inPerson: false,
     users: [...users],
   });
 
   // Log out the seed data to indicate what should appear in the database
   console.table(users);
-  console.info('Seed complete');
+  console.info('Seeding complete');
   process.exit(0);
 });

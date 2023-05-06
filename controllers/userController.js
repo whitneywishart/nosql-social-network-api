@@ -1,5 +1,5 @@
 const { ObjectId } = require('mongoose').Types;
-const { User, Friend } = require('../models');
+const { User, Course } = require('../models');
 
 // Aggregate function to get the number of users overall
 const headCount = async () => {
@@ -8,21 +8,6 @@ const headCount = async () => {
   return numberOfUsers;
 }
 
-// Aggregate function for getting the overall grade using $avg
-const grade = async (userId) =>
-  User.aggregate([
-    // only include the given user by using $match
-    { $match: { _id: new ObjectId(userId) } },
-    {
-      $unwind: '$thoughts',
-    },
-    {
-      $group: {
-        _id: new ObjectId(userId),
-        overallGrade: { $avg: '$thoughts.reaction' },
-      },
-    },
-  ]);
 
 module.exports = {
   // Get all users
@@ -69,7 +54,7 @@ module.exports = {
       res.status(500).json(err);
     }
   },
-  // Delete a user and remove them from the friend
+  // Delete a user and remove them from the course
   async deleteUser(req, res) {
     try {
       const user = await User.findOneAndRemove({ _id: req.params.userId });
@@ -78,15 +63,15 @@ module.exports = {
         return res.status(404).json({ message: 'No such user exists' });
       }
 
-      const friend = await Friend.findOneAndUpdate(
+      const course = await Course.findOneAndUpdate(
         { users: req.params.userId },
         { $pull: { users: req.params.userId } },
         { new: true }
       );
 
-      if (!friend) {
+      if (!course) {
         return res.status(404).json({
-          message: 'User deleted, but no friends found',
+          message: 'User deleted, but no courses found',
         });
       }
 
