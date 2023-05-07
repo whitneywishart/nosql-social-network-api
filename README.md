@@ -1,1 +1,1 @@
-# NoNQL Social Network API
+# NoSQL Social Network API
