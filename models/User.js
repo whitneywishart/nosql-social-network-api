@@ -9,13 +9,13 @@ const userSchema = new Schema(
     username: {
       type: String,
       // unique: true,
-      // required: true,
-      trim: true,
-      // default: 'Anonymous',
+      required: true,
+      trim: true
     },
+
     email: {
       type: String,
-      // required: true,
+      required: true,
       // unique: true,
       match: [/.+\@.+\..+/]
     },

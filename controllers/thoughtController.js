@@ -63,7 +63,7 @@ module.exports = {
         return res.status(404).json({ message: 'No such thought exists' });
       }
 
-      const user = await Course.findOneAndUpdate(
+      const user = await User.findOneAndUpdate(
         { thoughts: req.params.thoughtId },
         { $pull: { users: req.params.thoughtId } },
         { new: true }

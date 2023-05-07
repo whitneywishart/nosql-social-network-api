@@ -25,4 +25,6 @@ const thoughtSchema = new Schema(
   }
 );
 
+
+
 module.exports = thoughtSchema;
