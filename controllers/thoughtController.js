@@ -30,7 +30,7 @@ module.exports = {
   // Get a single thought
   async getSingleThought(req, res) {
     try {
-      const thought = await Thought.findOne({ _id: req.params.thoughtId })
+      const thought = await User.findOne({ _id: req.params.thoughtId })
         .select('-__v');
 
       if (!thought) {
@@ -54,6 +54,28 @@ module.exports = {
       res.status(500).json(err);
     }
   },
+
+  // Update thought
+  async updateThought(req, res) {
+    try {
+      const thought = await User.findOneAndUpdate(
+        { _id: req.params.thoughtId },
+        { $set: req.body },
+        { runValidators: true, new: true }
+      );
+
+      if (!thought) {
+        return res.status(404).json({ message: 'No thought found with that ID' });
+      }
+
+      res.json(thought);
+    } catch (err) {
+      console.log(err);
+      res.status(500).json(err);
+    }
+  },
+
+
   // Delete a thought and remove them from the user
   async deleteThought(req, res) {
     try {
@@ -108,7 +130,7 @@ module.exports = {
   // Remove user from a thought
   async removeUser(req, res) {
     try {
-      const user = await Thought.findOneAndUpdate(
+      const user = await User.findOneAndUpdate(
         { _id: req.params.thoughtId },
         { $pull: { user: { userId: req.params.userId } } },
         { runValidators: true, new: true }
