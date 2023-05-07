@@ -26,7 +26,7 @@ module.exports = {
       return res.status(500).json(err);
     }
   },
-  
+
   // Get a single thought
   async getSingleThought(req, res) {
     try {
@@ -38,8 +38,7 @@ module.exports = {
       }
 
       res.json({
-        thought,
-        // grade: await grade(req.params.userId),
+        thought
       });
     } catch (err) {
       console.log(err);
@@ -126,49 +125,4 @@ module.exports = {
       res.status(500).json(err);
     }
   },
-
-
-// Add a friend to a user
-async addFriend(req, res) {
-  console.log('Adding a friend');
-  console.log(req.body);
-
-  try {
-    const user = await Friend.findOneAndUpdate(
-      { _id: req.params.friendId },
-      { $addToSet: { friends: req.body } },
-      { runValidators: true, new: true }
-    );
-
-    if (!friend) {
-      return res
-        .status(404)
-        .json({ message: 'No friend found with that ID' });
-    }
-
-    res.json(user);
-  } catch (err) {
-    res.status(500).json(err);
-  }
-},
-// Remove friend from a user
-async removeFriend(req, res) {
-  try {
-    const user = await Friend.findOneAndUpdate(
-      { _id: req.params.friendId },
-      { $pull: { friend: { friendId: req.params.friendId } } },
-      { runValidators: true, new: true }
-    );
-
-    if (!friend) {
-      return res
-        .status(404)
-        .json({ message: 'No friend found with that ID' });
-    }
-
-    res.json(friend);
-  } catch (err) {
-    res.status(500).json(err);
-  }
-},
 };

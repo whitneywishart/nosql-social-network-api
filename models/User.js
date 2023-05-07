@@ -6,15 +6,18 @@ const reactionSchema = require('./Reaction');
 // Schema to create User model
 const userSchema = new Schema(
   {
-    first: {
+    username: {
       type: String,
-      required: true,
-      max_length: 50,
+      // unique: true,
+      // required: true,
+      trim: true,
+      // default: 'Anonymous',
     },
-    last: {
+    email: {
       type: String,
-      required: true,
-      max_length: 50,
+      // required: true,
+      // unique: true,
+      match: [/.+\@.+\..+/]
     },
 
     thoughts: [thoughtSchema],
@@ -24,10 +27,14 @@ const userSchema = new Schema(
   {
     toJSON: {
       getters: true,
+      virtuals: true,
     },
   }
 );
 
-const User = model('user', userSchema);
+userSchema.virtual('friendCount').get(function () {
+  return this.friends.length;
+});
 
+const User = model('User', userSchema);
 module.exports = User;
