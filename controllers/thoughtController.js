@@ -4,13 +4,10 @@ module.exports = {
   // Get all thoughts
   async getThoughts(req, res) {
     try {
-      const thoughts = await User.find();
+      const thoughts = await User.find({})
+        .select('thoughts');
 
-      const thoughtObj = {
-        thoughts
-      };
-
-      res.json(thoughtObj);
+      res.json(thoughts);
     } catch (err) {
       console.log(err);
       return res.status(500).json(err);
@@ -84,7 +81,7 @@ module.exports = {
     }
   },
 
-  // Add an thought to a thought
+  // Add an thought to a user
   async addThought(req, res) {
     console.log('Adding a thought');
     console.log(req.body);
@@ -110,7 +107,7 @@ module.exports = {
 
 
 
-  // Remove thought from a thought
+  // Remove thought from a user
   async removeThought(req, res) {
     try {
       const thought = await User.findOneAndUpdate(
