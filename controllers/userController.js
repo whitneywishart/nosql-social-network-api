@@ -1,12 +1,5 @@
 const { User } = require('../models');
 
-// Aggregate function to get the number of users overall
-const headCount = async () => {
-  const numberOfUsers = await User.aggregate()
-    .count('userCount');
-  return numberOfUsers;
-}
-
 module.exports = {
   // Get all users
   async getUsers(req, res) {
@@ -14,8 +7,7 @@ module.exports = {
       const users = await User.find();
 
       const userObj = {
-        users,
-        headCount: await headCount(),
+        users
       };
 
       res.json(userObj);

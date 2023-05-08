@@ -8,9 +8,8 @@ const reactionSchema = new Schema(
     },
     reactionText: {
       type: String,
-      required: true,
-      maxlength: 50,
-      minlength: 4,
+      // required: true,
+      maxlength: 280
     },
     reactionCount: {
       type: Number,
@@ -29,5 +28,7 @@ const reactionSchema = new Schema(
     id: false,
   }
 );
+
+// const Reaction = model('Reaction', reactionSchema);
 
 module.exports = reactionSchema;

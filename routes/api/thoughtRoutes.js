@@ -17,4 +17,10 @@ router
   .put(updateThought)
   .delete(deleteThought);
 
+// /api/thoughts/:thoughtId/friends/:friendId
+router
+  .route('/:thoughtId/friends/:friendId')
+  .post()
+  .delete();
+
 module.exports = router;
