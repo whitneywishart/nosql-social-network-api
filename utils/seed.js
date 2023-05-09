@@ -15,12 +15,12 @@ connection.once('open', async () => {
   const users = [];
 
   // Add users to the users array
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < 8; i++) {
     // Get random info from ./data
-    const user = getRandomName(5);
-    const thoughts = getRandomThoughts(5);
-    const friends = getRandomFriends(5);
-    const reactions = getRandomReactions(3);
+    const user = getRandomName(8);
+    const thoughts = getRandomThoughts(8);
+    const friends = getRandomFriends(8);
+    const reactions = getRandomReactions(8);
 
     users.push({
       user,

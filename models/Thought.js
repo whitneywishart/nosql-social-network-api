@@ -1,25 +1,37 @@
-const { Schema, Types } = require('mongoose');
+const { Schema, model } = require('mongoose');
 
+// Schema to create thought model
 const thoughtSchema = new Schema(
-
   {
     thoughtText: {
       type: String,
-      maxlength: 280
+      required: true,
+      minLength: 1,
+      maxLength: 280,
     },
     createdAt: {
       type: Date,
-      default: Date.now
+      default: Date.now,
     },
-  },
 
+  },
   {
     toJSON: {
       getters: true,
+      virtuals: true
     },
-    id: false,
+
+    id: false
   }
 );
 
-module.exports = thoughtSchema;
+thoughtSchema
+  .virtual('reactionCount')
+  .get(function () {
+    return this.reactions.length;
+  })
 
+
+const Thought = model('thought', thoughtSchema);
+
+module.exports = Thought;

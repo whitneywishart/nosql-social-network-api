@@ -100,7 +100,6 @@ const getRandomName = () => {
 };
 
 
-// console.log(getRandomName());
 
 // Function to generate random thoughts that we can add to user object
 const getRandomThoughts = (int) => {
@@ -112,6 +111,7 @@ const getRandomThoughts = (int) => {
   }
   return results;
 };
+
 
 // Function to generate random friends that we can add to user object
 const getRandomFriends = (int) => {
