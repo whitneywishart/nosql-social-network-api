@@ -4,15 +4,17 @@ module.exports = {
   // Get all thoughts
   async getThoughts(req, res) {
     try {
-      const thoughts = await User.find()
-      .select('thoughts')
-
-      res.json(thoughts);
+      console.log("+++++++++++++++++++++++++++++++++++++++++++++")
+console.log("Getting thoruhgs")
+      console.log("+++++++++++++++++++++++++++++++++++++++++++++")
+      const thoughtz = await Thought.find({})
+      res.json(thoughtz);
     } catch (err) {
       console.log(err);
       return res.status(500).json(err);
     }
   },
+
 
   // Get a single thought
   async getSingleThought(req, res) {
@@ -37,11 +39,23 @@ module.exports = {
   // create a new thought
   async createThought(req, res) {
     try {
-      const thought = await Thought.create(req.body)
-
-      console.log(thought)
-      res.json(thought);
+      //username and a thoughttext
+      const newThought = await Thought.create(req.body)
+      try{
+        const user = await User.findOneAndUpdate({ username: req.body.username }, {
+          $push: { thoughts: newThought._id }
+        })
+        console.log(user)
+        res.json(user);
+        return
+      } catch(error) {
+        console.log(error)
+        console.log("This is because the user didn't exist with that username")
+        await Thought.deleteOne({_id: newThought._id})
+        res.status(400).json(error)
+      }
     } catch (err) {
+      console.log(err)
       res.status(500).json(err);
     }
   },
@@ -84,32 +98,6 @@ module.exports = {
       res.status(500).json(err);
     }
   },
-
-  // Add an thought to a user
-  async addThought(req, res) {
-    console.log('Adding a thought');
-    console.log(req.body);
-
-    try {
-      const thought = await User.findOneAndUpdate(
-        { _id: req.params.thoughtId },
-        { $addToSet: { thoughts: req.body } },
-        { runValidators: true, new: true }
-      );
-
-      if (!thought) {
-        return res
-          .status(404)
-          .json({ message: 'No thought found with that ID' });
-      }
-
-      res.json(thought);
-    } catch (err) {
-      res.status(500).json(err);
-    }
-  },
-
-
 
   // Remove thought from a user
   async removeThought(req, res) {

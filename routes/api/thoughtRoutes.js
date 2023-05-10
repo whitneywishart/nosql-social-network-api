@@ -7,6 +7,18 @@ const {
   deleteThought,
 } = require('../../controllers/thoughtController');
 
+const {
+  getUsers,
+  getSingleUser,
+  createUser,
+  updateUser,
+  deleteUser,
+  addThought,
+  removeThought,
+  addFriend,
+  removeFriend,
+} = require('../../controllers/userController');
+
 // /api/thoughts
 router.route('/')
   .get(getThoughts)
