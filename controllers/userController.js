@@ -30,7 +30,7 @@ const userController = {
             .select('-__v')
             .then(userDocuments => {
                 if (!userDocuments) {
-                    res.staus(404).json({ message: 'No User found' });
+                    res.status(404).json({ message: 'No User found' });
                     return;
                 }
                 res.json(userDocuments)
